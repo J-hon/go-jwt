@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/googleapis/enterprise-certificate-proxy/client"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -20,7 +20,7 @@ func DbInstance() *mongo.Client {
 
 	MongoDb := os.Getenv("MONGODB_URL")
 
-	mongo.NewClient(options.Client().ApplyURI(MongoDb))
+	client, err := mongo.NewClient(options.Client().ApplyURI(MongoDb))
 
 	if err != nil {
 		log.Fatal(err)

@@ -9,7 +9,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func checkUserType(ctx *gin.Context, role string) (err error) {
+func CheckUserType(ctx *gin.Context, role string) (err error) {
 	userType := ctx.GetString("user_type")
 	err = nil
 
@@ -32,7 +32,7 @@ func MatchUserTypeToUid(ctx *gin.Context, userId string) (err error) {
 		return err
 	}
 
-	err = checkUserType(ctx, userType)
+	err = CheckUserType(ctx, userType)
 	return err
 }
 
@@ -42,7 +42,7 @@ func VerifyPassword(userPassword string, hashedPassword string) (bool, string) {
 	msg := ""
 
 	if err != nil {
-		msg = fmt.Sprintf("Invalid password")
+		msg = fmt.Sprintf("Incorrect password")
 		check = false
 	}
 
@@ -50,10 +50,10 @@ func VerifyPassword(userPassword string, hashedPassword string) (bool, string) {
 }
 
 func HashPassword(password string) string {
-	res, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	if err != nil {
 		log.Panic(err)
 	}
 
-	return string(res)
+	return string(bytes)
 }

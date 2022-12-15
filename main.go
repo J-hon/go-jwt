@@ -1,15 +1,21 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/J-hon/go-jwt/routes"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	port := os.Getenv("PORT")
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatal("Error loading .emv file")
+	}
 
+	port := os.Getenv("PORT")
 	if port == "" {
 		port = ":9010"
 	}
